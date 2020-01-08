@@ -25,6 +25,7 @@ export default class Header extends Component {
 
   toggleAdmin() {
     const { isAdmin } = this.state;
+    console.log(this.state.isAdmin)
     this.setState({ isAdmin: !isAdmin });
   }
 
@@ -33,7 +34,7 @@ export default class Header extends Component {
     axios.post('/auth/login', { username, password })
     .then(user => {
       this.props.updateUser(user.data);
-      this.setState({ username: '', password: '' });
+      this.setState({ username: '', password: '', isAdmin: false });
     })
     .catch(err => alert(err.response.request.response));
   }
@@ -42,11 +43,12 @@ export default class Header extends Component {
     const { username, password, isAdmin } = this.state;
     axios.post('/auth/register', { username, password, isAdmin })
     .then(user => {
-      this.setState({ username: '', password: '' });
+      this.setState({ username: '', password: '', isAdmin: false });
       this.props.updateUser(user.data);
+      console.log(this.state.isAdmin)
     })
     .catch(err => {
-      this.setState({ username: '', password: '' });
+      this.setState({ username: '', password: '', isAdmin: false });
       alert(err.response.request.response);
     });
   }
